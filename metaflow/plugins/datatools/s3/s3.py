@@ -1135,6 +1135,7 @@ class S3(object):
         List[(str, str)]
             List of `(key, url)` pairs corresponding to the objects uploaded.
         """
+        print("In S3.put_many()")
 
         def _store():
             for key_obj in key_objs:
@@ -1306,6 +1307,7 @@ class S3(object):
                     yield tuple(map(url_unquote, line.strip(b"\n").split(b" ")))
 
     def _put_many_files(self, url_info, overwrite):
+        print("In s3._put_many_files()")
         url_info = list(url_info)
         url_dicts = [
             dict(
@@ -1344,6 +1346,7 @@ class S3(object):
                 return [(info["key"], url) for _, url, info in url_info if url in urls]
 
     def _s3op_with_retries(self, mode, **options):
+        print("In S3._s3op_with_retries()")
         from . import s3op
 
         # High level note on what this function does:

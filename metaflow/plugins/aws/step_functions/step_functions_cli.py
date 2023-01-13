@@ -279,15 +279,19 @@ def make_flow(
     if obj.flow_datastore.TYPE != "s3":
         raise MetaflowException("AWS Step Functions requires --datastore=s3.")
 
+    print("ATTACHING DECORATORS")
     # Attach AWS Batch decorator to the flow
     decorators._attach_decorators(obj.flow, [BatchDecorator.name])
+    print("INITIALIZING DECORATORS")
     decorators._init_step_decorators(
         obj.flow, obj.graph, obj.environment, obj.flow_datastore, obj.logger
     )
 
+    print("INITIALIZING METAFLOW PACKAGE")
     obj.package = MetaflowPackage(
         obj.flow, obj.environment, obj.echo, obj.package_suffixes
     )
+    print("SAVING DATA IN DATASTORE")
     package_url, package_sha = obj.flow_datastore.save_data(
         [obj.package.blob], len_hint=1
     )[0]
