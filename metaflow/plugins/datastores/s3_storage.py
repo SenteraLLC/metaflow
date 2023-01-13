@@ -85,11 +85,13 @@ class S3Storage(DataStoreStorage):
                 else:
                     yield path, obj, None, None, None
 
+        print("INITIALIZING S3 object")
         with S3(
             s3root=self.datastore_root,
             tmproot=ARTIFACT_LOCALROOT,
             external_client=self.s3_client,
         ) as s3:
+            print("OUTSIDE S3.__init__()")
             # HACK: The S3 datatools we rely on does not currently do a good job
             # determining if uploading things in parallel is more efficient than
             # serially. We use a heuristic for now where if we have a lot of
@@ -109,8 +111,10 @@ class S3Storage(DataStoreStorage):
             # (which avoids re-writing the files) or s3.put sequentially.
             if len_hint > 10:
                 # Use put_many
+                print("CALLING s3.put_many()")
                 s3.put_many(starmap(S3PutObject, _convert()), overwrite)
             else:
+                print("CALLING s3.put()")
                 # Sequential upload
                 for key, obj, _, _, metadata in _convert():
                     s3.put(key, obj, overwrite=overwrite, metadata=metadata)

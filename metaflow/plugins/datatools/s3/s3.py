@@ -463,6 +463,7 @@ class S3(object):
     def __init__(
         self, tmproot=".", bucket=None, prefix=None, run=None, s3root=None, **kwargs
     ):
+        print("INSIDE S3.__init__()")
         if not boto_found:
             raise MetaflowException("You need to install 'boto3' in order to use S3.")
 
