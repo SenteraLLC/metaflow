@@ -133,6 +133,8 @@ def create(
     workflow_timeout=None,
     log_execution_history=False,
 ):
+    print("IN THE FORK!!")
+
     validate_tags(tags)
 
     obj.echo(
@@ -142,6 +144,7 @@ def create(
     if SERVICE_VERSION_CHECK:
         check_metadata_service_version(obj)
 
+    print("RESOLVING TOKEN")
     token = resolve_token(
         obj.state_machine_name,
         obj.token_prefix,
@@ -152,6 +155,7 @@ def create(
         obj.is_project,
     )
 
+    print("MAKING THE FLOW")
     flow = make_flow(
         obj,
         token,
@@ -163,6 +167,7 @@ def create(
         obj.is_project,
     )
 
+    print("DEPLOYING FLOW")
     if only_json:
         obj.echo_always(flow.to_json(), err=False, no_bold=True)
     else:
