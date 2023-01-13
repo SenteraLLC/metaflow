@@ -1244,6 +1244,7 @@ class S3(object):
                 side_results = op(self._s3_client.client, tmp.name if tmp else None)
                 return tmp.name if tmp else None, side_results
             except self._s3_client.error as err:
+                print(err)
                 from . import s3op
 
                 error_code = s3op.normalize_client_error(err)
