@@ -1053,6 +1053,7 @@ class S3(object):
         str
             URL of the object stored.
         """
+        print("INSIDE S3.put()")
 
         if isinstance(obj, (RawIOBase, BufferedIOBase)):
             if not obj.readable() or not obj.seekable():
@@ -1231,6 +1232,7 @@ class S3(object):
         return self._put_many_files(_check(), overwrite)
 
     def _one_boto_op(self, op, url, create_tmp_file=True):
+        print("INSIDE _one_boto_op()")
         error = ""
         for i in range(S3_RETRY_COUNT + 1):
             tmp = None

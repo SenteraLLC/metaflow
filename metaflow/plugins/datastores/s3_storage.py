@@ -76,6 +76,7 @@ class S3Storage(DataStoreStorage):
 
     def save_bytes(self, path_and_bytes_iter, overwrite=False, len_hint=0):
         print("S3 DATASTORE: SAVE BYTES")
+        print(f"OVERWRITE: {overwrite}")
         def _convert():
             # Output format is the same as what is needed for S3PutObject:
             # key, value, path, content_type, metadata
